@@ -1,6 +1,6 @@
 import sys
 import os
-from PyQt5.QtWidgets import (QListWidget, QComboBox, QLineEdit, QTextEdit, QAction, QFileDialog, QApplication, QPushButton, QWidget, QLabel)
+from PyQt5.QtWidgets import (QListView, QListWidget, QComboBox, QLineEdit, QFileDialog, QApplication, QPushButton, QWidget, QLabel)
 
 import xlrd
 
@@ -8,11 +8,14 @@ import xlsxwriter
 from collections import Counter
 import itertools
 
+from pymongo import MongoClient
+
 
 
 global uDates
 
 uDates = []
+
 
 
 global name_List
@@ -24,8 +27,7 @@ name_List.sort()
 
 
 global admin_List
-admin_List = ["Bitetto", "DeFonzo", "Feibusch", "McClain", "Messina", "Palgon", "Patel", "Sidoti", "Tampellini",
-              "Yorke"]
+admin_List = []
 
 global downstairs_List
 downstairs_List = ["Maldonado", "De La Rosa", "Stein", "Amadeo", "Bradley", "Presser", "Rosen"]
@@ -46,7 +48,31 @@ class Example(QWidget):
 
         self.initUI()
 
+    def initDatabase(self):
+        self.client = MongoClient('localhost', 27017)
+        self.db = self.client['onDeckData']
+        self.collection = self.db['staff']
+
+
+
+        self.admins = self.db.admins
+        self.operators = self.db.operators
+        self.fulltimers = self.db.fulltimers
+        self.fiveQers = self.db.fiveQers
+        self.vets = self.db.vets
+        print('hell')
+        for admins in self.admins.find():
+            print(admins['name'])
+            admin_List.append(admins['name'])
+
+
+
+
+
+
+
     def initUI(self):
+        self.initDatabase()
         self.button = QPushButton('Pick File', self)
         self.button.clicked.connect(self.showDialog)
         self.button.move(20,20)
@@ -537,6 +563,7 @@ class Example(QWidget):
         if str(self.employeeRank.currentText()) == "Admin":
             admin = (str(self.employee.text()))
             admin_List.append(admin)
+            self.admins.insert({'name': admin})
             print(admin_List)
             self.adminList.clear()
             admin_List.sort()
@@ -546,6 +573,7 @@ class Example(QWidget):
         if str(self.employeeRank.currentText()) == "5Q":
             downstairs = (str(self.employee.text()))
             downstairs_List.append(downstairs)
+            self.fiveQers.insert({'name': downstairs})
             self.fiveQList.clear()
             downstairs_List.sort()
             for item in downstairs_List:
@@ -555,6 +583,7 @@ class Example(QWidget):
         if str(self.employeeRank.currentText()) == "Fulltime":
             fulltime = (str(self.employee.text()))
             fulltime_List.append(fulltime)
+            self.fulltimers.insert({'name': fulltime})
             self.fullTimeList.clear()
             fulltime_List.sort()
             for item in fulltime_List:
@@ -563,6 +592,7 @@ class Example(QWidget):
         if str(self.employeeRank.currentText()) == "Operator":
             operator = (str(self.employee.text()))
             name_List.append(operator)
+            self.operators.insert({'name':operator})
             self.operatorList.clear()
             name_List.sort()
             for item in name_List:
@@ -571,6 +601,7 @@ class Example(QWidget):
         if str(self.employeeRank.currentText()) == "Vets":
             operator = (str(self.employee.text()))
             Trainer_list.append(operator)
+            self.vets.insert({'name': operator})
             self.vetList.clear()
             Trainer_list.sort()
             for item in Trainer_list:
@@ -634,6 +665,8 @@ class Example(QWidget):
         print(dates)
 
     def schedule(self, x, y, yy, yyy, z, zz):
+
+
         # workbook, worksheet, worksheet2, sheet, sheet2, format, format0, format1, format2, format3, format4, format5, format6, formatgreen, formatred, formatU = setFile()
         rowz = 5
         rowzz = 5
@@ -2410,23 +2443,35 @@ class Example(QWidget):
             for row in range(sheet.nrows):
                 operator = sheet.cell_value(row, 8)
                 shiftTime = sheet.cell_value(row,9)
+                replayOfficial = sheet.cell_value(row, 6)
+                station = sheet.cell_value(row, 10)
+                replayTx = sheet.cell_value(row, 11)
+
+
 
 
                 if sheet.cell_value(row, 1) == date and operator != '':
-                    nameAndTime = {"operator": operator, "shiftTime" : shiftTime}
+                    nameAndTime = {"operator": operator, "shiftTime" : shiftTime, "replayUmpire": replayOfficial, "station": station, "tx" : replayTx}
                     if day == 1:
+                        nameAndTime['day'] = 'monday'
                         mondaySchedule.append(nameAndTime)
                     if day == 2:
+                        nameAndTime['day'] = 'tuesday'
                         tuesdaySchedule.append(nameAndTime)
                     if day == 3:
+                        nameAndTime['day'] = 'wednesday'
                         wednesdaySchedule.append(nameAndTime)
                     if day == 4:
+                        nameAndTime['day'] = 'thursday'
                         thursdaySchedule.append(nameAndTime)
                     if day == 5:
+                        nameAndTime['day'] = 'friday'
                         fridaySchedule.append(nameAndTime)
                     if day == 6:
+                        nameAndTime['day'] = 'saturday'
                         saturdaySchedule.append(nameAndTime)
                     if day == 7:
+                        nameAndTime['day'] = 'sunday'
                         sundaySchedule.append(nameAndTime)
 
 
@@ -2617,8 +2662,22 @@ class Example(QWidget):
         self.shortTurnAround.clear()
         for item in shortTurnAroundList:
             self.shortTurnAround.addItem(item)
-        self.saveToDatabase(mondayScheduleFinal, tuesdayScheduleFinal, wednesdayScheduleFinal, thursdayScheduleFinal, fridayScheduleFinal, saturdayScheduleFinal, sundayScheduleFinal)
 
+        # self.admins.delete_many({})
+        # for item in mondayScheduleFinal:
+        #     self.admins.insert_one(item)
+        # for item in tuesdayScheduleFinal:
+        #     self.admins.insert_one(item)
+        # for item in wednesdayScheduleFinal:
+        #     self.admins.insert_one(item)
+        # for item in thursdayScheduleFinal:
+        #     self.admins.insert_one(item)
+        # for item in fridayScheduleFinal:
+        #     self.admins.insert_one(item)
+        # for item in saturdayScheduleFinal:
+        #     self.admins.insert_one(item)
+        # for item in sundayScheduleFinal:
+        #     self.admins.insert_one(item)
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
