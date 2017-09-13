@@ -12,7 +12,7 @@ DATA_FILES = []
 OPTIONS = {
 'iconfile' : 'scheduler.icns',
 'argv_emulation': True,
-'includes': ['sip', 'PyQt5']}
+'includes': ['sip', 'PyQt5', 'urllib.parse']}
 
 setup(
     app=APP,
