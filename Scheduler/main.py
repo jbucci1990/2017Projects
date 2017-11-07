@@ -852,6 +852,7 @@ class Example(QWidget):
 
                     dailyHours = {}
 
+
                     if name in notAvailable:
                         print(name, date, "MISTAKE")
 
@@ -859,41 +860,183 @@ class Example(QWidget):
                         availableString = "%s is unavailable on: %s" % (name, convertedDate)
                         weekNotAvailable.append(availableString)
 
-                    worksheet.write(rowz, colz, namePerDay[name][0], format1)
-                    worksheet2.write(rowzz, colz, namePerDay[name][0], format1)
+                    elif "Reviewability" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format8)
+                        worksheet.write(rowz, 0, name)
 
-                    worksheet.write(rowz, 0, name)
-                    worksheet2.write(rowzz, 0, name)
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format8)
+                        worksheet2.write(rowzz, 0, name)
 
-                    worksheet.set_row(rowz + 1, 4)
-
-                    times = []
-                    times.extend(namePerDay[name][0].split(" - "))
-                    for time in times:
-                        print(time)
-
-                        if time in timeComparison:
-                            print("TRUE ")
-
-                            print(timeComparison[time])
+                        worksheet.set_row(rowz + 1, 4)
 
 
-                            math.append(timeComparison[time])
-                        else:
-                            print("FALSE")
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
 
-                    timeTotal = math[1] - math[0]
-                    print(timeTotal, "is today's hours")
+                            if time in timeComparison:
 
-                    dailyHours = {name: timeTotal}
-                    adminTotalHours.append(dailyHours)
 
-                    print(dailyHours)
+                                math.append(timeComparison[time])
 
-                    worksheet.write(rowz, colzz, timeTotal)
-                    worksheet2.write(rowzz, colzz, timeTotal)
+                            else:
+                                print("FALSE ")
 
-                    print(times)
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        adminTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Pre-Game Assist" in namePerDay[name][1] or "Training" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format6)
+                        worksheet.write(rowz, 0, name)
+                        worksheet.set_row(rowz + 1, 4)
+                        print(name, namePerDay[name][0])
+
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format6)
+                        worksheet2.write(rowzz, 0, name)
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+                            print( time)
+
+                            if time in timeComparison:
+                                print("TRUE ")
+
+                                print(timeComparison[time])
+
+
+                                math.append(timeComparison[time])
+                                print("This is math:", math)
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+                        print(timeTotal, "is today's hours")
+
+                        dailyHours = {name: timeTotal}
+                        print(dailyHours)
+
+                        adminTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Reviewability" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format8)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format8)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        adminTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Admin" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format1)
+                        worksheet.write(rowz, 0, name)
+                        worksheet.set_row(rowz + 1, 4)
+                        print(name, namePerDay[name][0])
+
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format1)
+                        worksheet2.write(rowzz, 0, name)
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+                            print( time)
+
+                            if time in timeComparison:
+                                print("TRUE ")
+
+                                print(timeComparison[time])
+
+
+                                math.append(timeComparison[time])
+                                print("This is math:", math)
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+                        print(timeTotal, "is today's hours")
+
+                        dailyHours = {name: timeTotal}
+                        print(dailyHours)
+
+                        adminTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    # worksheet.write(rowz, colz, namePerDay[name][0], format1)
+                    # worksheet2.write(rowzz, colz, namePerDay[name][0], format1)
+                    #
+                    # worksheet.write(rowz, 0, name)
+                    # worksheet2.write(rowzz, 0, name)
+                    #
+                    # worksheet.set_row(rowz + 1, 4)
+
+                    # times = []
+                    # times.extend(namePerDay[name][0].split(" - "))
+                    # for time in times:
+                    #     print(time)
+                    #
+                    #     if time in timeComparison:
+                    #         print("TRUE ")
+                    #
+                    #         print(timeComparison[time])
+                    #
+                    #
+                    #         math.append(timeComparison[time])
+                    #     else:
+                    #         print("FALSE")
+                    #
+                    # timeTotal = math[1] - math[0]
+                    # print(timeTotal, "is today's hours")
+                    #
+                    # dailyHours = {name: timeTotal}
+                    # adminTotalHours.append(dailyHours)
+                    #
+                    # print(dailyHours)
+                    #
+                    # worksheet.write(rowz, colzz, timeTotal)
+                    # worksheet2.write(rowzz, colzz, timeTotal)
+                    #
+                    # print(times)
 
 
 
@@ -1142,9 +1285,106 @@ class Example(QWidget):
                         worksheet2.write(rowzz, colzz, timeTotal)
 
                         print(times)
+                    elif "Inventory" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format11)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format11)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
 
 
-                    elif "Pre-Game Assist" in namePerDay[name][1]:
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        techTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Back Wall" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format10)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format10)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        # worksheet2.write(rowzz, colz, namePerDay[name][0], format6)
+                        # 					worksheet2.write(rowzz, 0, name)
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        techTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Reviewability" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format8)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format8)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        techTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Pre-Game Assist" in namePerDay[name][1] or "Training" in namePerDay[name][1]:
                         # print sheet.cell_value(row,3)
                         # 					print namePerDay[name], name
                         worksheet.write(rowz, colz, namePerDay[name][0], format6)
@@ -1250,7 +1490,7 @@ class Example(QWidget):
             # print " ---------------------------- \n"
             rowz += 1
             rowzz += 1
-
+            ## yy = downstairsList/5Q
             for name in yy:
 
                 rowformath = rowz + 1
@@ -1431,8 +1671,106 @@ class Example(QWidget):
                         worksheet2.write(rowzz, colzz, timeTotal)
 
 
+                    elif "Reviewability" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format8)
+                        worksheet.write(rowz, 0, name)
 
-                    elif "Pre-Game Assist" in namePerDay[name][1]:
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format8)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        backWallTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Inventory" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format11)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format11)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        backWallTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Back Wall" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format10)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format10)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        # worksheet2.write(rowzz, colz, namePerDay[name][0], format6)
+                        # 					worksheet2.write(rowzz, 0, name)
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        backWallTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Pre-Game Assist" in namePerDay[name][1] or "Training" in namePerDay[name][1]:
                         # print sheet.cell_value(row,3)
                         # 					print namePerDay[name], name
                         worksheet.write(rowz, colz, namePerDay[name][0], format6)
@@ -1642,6 +1980,37 @@ class Example(QWidget):
 
 
 
+                    elif "Inventory" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format11)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format11)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        fullTimeTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
 
                     elif "DA" in namePerDay[name][1]:
                         # print sheet.cell_value(row,3)
@@ -1715,7 +2084,7 @@ class Example(QWidget):
 
 
 
-                    elif "Pre-Game Assist" in namePerDay[name][1]:
+                    elif "Pre-Game Assist" in namePerDay[name][1] or "Training" in namePerDay[name][1]:
                         # print sheet.cell_value(row,3)
                         # 					print namePerDay[name], name
                         worksheet.write(rowz, colz, namePerDay[name][0], format6)
@@ -1746,6 +2115,109 @@ class Example(QWidget):
 
                         worksheet.write(rowz, colzz, timeTotal)
                         worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Reviewability" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format8)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format8)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        fullTimeTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+
+
+                    elif "Angle ID" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format9)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format9)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        fullTimeTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Back Wall" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format10)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format10)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        # worksheet2.write(rowzz, colz, namePerDay[name][0], format6)
+                        # 					worksheet2.write(rowzz, 0, name)
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        fullTimeTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+
 
 
 
@@ -1950,6 +2422,45 @@ class Example(QWidget):
                         worksheet.write(rowz, colzz, timeTotal)
                         worksheet2.write(rowzz, colzz, timeTotal)
 
+                    elif "Pre-Game Assist" in namePerDay[name][1] or "Training" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format6)
+                        worksheet.write(rowz, 0, name)
+                        worksheet.set_row(rowz + 1, 4)
+                        print(name, namePerDay[name][0])
+
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format6)
+                        worksheet2.write(rowzz, 0, name)
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+                            print( time)
+
+                            if time in timeComparison:
+                                print("TRUE ")
+
+                                print(timeComparison[time])
+
+
+                                math.append(timeComparison[time])
+                                print("This is math:", math)
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+                        print(timeTotal, "is today's hours")
+
+                        dailyHours = {name: timeTotal}
+                        print(dailyHours)
+
+                        techTotalHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
                     elif "INFRA" in namePerDay[name][1]:
                         # print sheet.cell_value(row,3)
                         # 					print namePerDay[name], name
@@ -2015,14 +2526,79 @@ class Example(QWidget):
                         worksheet2.write(rowzz, colzz, timeTotal)
 
 
-
-                    elif "Pre-Game Assist" in namePerDay[name][1]:
+                    elif "Reviewability" in namePerDay[name][1]:
                         # print sheet.cell_value(row,3)
                         # 					print namePerDay[name], name
-                        worksheet.write(rowz, colz, namePerDay[name][0], format6)
+                        worksheet.write(rowz, colz, namePerDay[name][0], format8)
                         worksheet.write(rowz, 0, name)
 
-                        worksheet2.write(rowzz, colz, namePerDay[name][0], format6)
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format8)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        realFullTimeHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+
+
+                    elif "Angle ID" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format9)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format9)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        realFullTimeHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Back Wall" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format10)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format10)
                         worksheet2.write(rowzz, 0, name)
 
                         worksheet.set_row(rowz + 1, 4)
@@ -2030,6 +2606,38 @@ class Example(QWidget):
 
                         # worksheet2.write(rowzz, colz, namePerDay[name][0], format6)
                         # 					worksheet2.write(rowzz, 0, name)
+
+                        times = []
+                        times.extend(namePerDay[name][0].split(" - "))
+                        for time in times:
+
+                            if time in timeComparison:
+
+
+                                math.append(timeComparison[time])
+
+                            else:
+                                print("FALSE ")
+
+                        timeTotal = math[1] - math[0]
+
+                        dailyHours = {name: timeTotal}
+
+                        realFullTimeHours.append(dailyHours)
+                        worksheet.write(rowz, colzz, timeTotal)
+                        worksheet2.write(rowzz, colzz, timeTotal)
+
+                    elif "Inventory" in namePerDay[name][1]:
+                        # print sheet.cell_value(row,3)
+                        # 					print namePerDay[name], name
+                        worksheet.write(rowz, colz, namePerDay[name][0], format11)
+                        worksheet.write(rowz, 0, name)
+
+                        worksheet2.write(rowzz, colz, namePerDay[name][0], format11)
+                        worksheet2.write(rowzz, 0, name)
+
+                        worksheet.set_row(rowz + 1, 4)
+
 
                         times = []
                         times.extend(namePerDay[name][0].split(" - "))
@@ -2257,6 +2865,10 @@ class Example(QWidget):
         global format5
         global format6
         global format7
+        global format8
+        global format9
+        global format10
+        global format11
         global formatgreen
         global formatred
         global formatU
@@ -2271,6 +2883,10 @@ class Example(QWidget):
         format5 = workbook.add_format()
         format6 = workbook.add_format()
         format7 = workbook.add_format()
+        format8 = workbook.add_format()
+        format9 = workbook.add_format()
+        format10 = workbook.add_format()
+        format11 = workbook.add_format()
 
 
         formatgreen = workbook.add_format()
@@ -2289,16 +2905,17 @@ class Example(QWidget):
         format1.set_border(1)
         format1.set_align('center')
 
+        ##EIC
         format2.set_bg_color('#C5E0B3')
         format2.set_border(1)
         format2.set_align('center')
-
+        ##Marker Cube Spooler
         format3.set_bg_color('#FF6B7B')
         format3.set_border(1)
         format3.set_align('center')
 
-        # Trainnee
-        format4.set_bg_color('#B4C6E7')
+        # DA
+        format4.set_bg_color('#EDEDED')
         format4.set_border(1)
         format4.set_align('center')
 
@@ -2307,13 +2924,35 @@ class Example(QWidget):
         format5.set_border(1)
         format5.set_align('center')
 
-        format6.set_bg_color('#A6A6A6')
+        #Pregame Assist / Training
+        format6.set_bg_color('#FFF2CC')
         format6.set_border(1)
         format6.set_align('center')
 
+        ##MOD
         format7.set_bg_color('#A9D08E')
         format7.set_border(1)
         format7.set_align('center')
+
+        ##Reviewability
+        format8.set_bg_color('#E2EFDA')
+        format8.set_border(1)
+        format8.set_align('center')
+
+        ##Angle ID
+        format9.set_bg_color('#DDEBF7')
+        format9.set_border(1)
+        format9.set_align('center')
+
+        ##BackWall
+        format10.set_bg_color('#FEA7AF')
+        format10.set_border(1)
+        format10.set_align('center')
+
+        ##Inventory
+        format11.set_bg_color('#ECAEFF')
+        format11.set_border(1)
+        format11.set_align('center')
 
         # # Marker
         # format8.set_bg_color('#DA9694')
@@ -2408,7 +3047,7 @@ class Example(QWidget):
             fulltimehours.update(object)
         for object in realFullTimeHours:
             realtimefulltime.update(object)
-        print(adminhours)
+        print(adminhours, "adminhours")
         print(realFullTimeHours, "FULLTIMEHOURS")
 
 
@@ -2530,13 +3169,13 @@ class Example(QWidget):
                 shiftTime = sheet.cell_value(row,9)
                 replayOfficial = sheet.cell_value(row, 6)
                 station = sheet.cell_value(row, 10)
-                replayTx = sheet.cell_value(row, 11)
+                # replayTx = sheet.cell_value(row, 11)
 
 
 
 
                 if sheet.cell_value(row, 1) == date and operator != '':
-                    nameAndTime = {"operator": operator, "shiftTime" : shiftTime, "replayUmpire": replayOfficial, "station": station, "tx" : replayTx}
+                    nameAndTime = {"operator": operator, "shiftTime" : shiftTime, "replayUmpire": replayOfficial, "station": station}
                     if day == 1:
                         nameAndTime['day'] = 'monday'
                         mondaySchedule.append(nameAndTime)
